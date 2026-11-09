@@ -1,0 +1,53 @@
+{
+  "route": "discuss",
+  "startedAt": "2026-11-09T13:23:47.580Z",
+  "version": 1,
+  "foundation": {
+    "purpose": "Let a small studio's team create, number and track invoices, with each studio's data kept completely separate.",
+    "scope": "full-stack",
+    "stage": "poc",
+    "traffic": "Many small studios of two to ten people, a few times a week each.",
+    "data": "Studios, people in a studio, clients, invoices (number, client, status, tax rate), line items (description, quantity, unit price)."
+  },
+  "confirmedAt": "2026-11-09T13:23:47.593Z",
+  "path": "small-poc",
+  "targetMode": "functional_prototype",
+  "pathChosenAt": "2026-11-09T13:23:47.595Z",
+  "pathRecommended": {
+    "pathId": "small-poc",
+    "because": "This path matches your confirmed application scope and stage. Pick another one to change it."
+  },
+  "visualReview": {
+    "pages": [
+      {
+        "name": "Sign up and sign in",
+        "purpose": "An owner creates a studio; anyone in a studio signs in.",
+        "layout": "form"
+      },
+      {
+        "name": "Team",
+        "purpose": "Add a colleague to the studio.",
+        "layout": "table"
+      },
+      {
+        "name": "Clients",
+        "purpose": "The studio's clients; add and edit one.",
+        "layout": "table"
+      },
+      {
+        "name": "Invoices",
+        "purpose": "Every invoice, unpaid first, with the total still owed.",
+        "layout": "table"
+      },
+      {
+        "name": "Invoice",
+        "purpose": "Create or edit an invoice: client, line items, tax rate, worked-out totals, and its status.",
+        "layout": "form"
+      }
+    ],
+    "approvedAt": "2026-11-09T13:23:47.633Z",
+    "ideaHash": "de0764e330d8627c9e1494d116fb207b8e20134e3f5f8a7dc52c33dd02a9f7fe",
+    "planHash": "f3ac37c407dfb0c5d282eba434da694f759d7d8dd5e3e7915fa9a3746d083006"
+  },
+  "builtAt": "2026-11-09T13:23:47.976Z"
+}

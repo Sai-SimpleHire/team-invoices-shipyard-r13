@@ -1,0 +1,252 @@
+{
+  "version": 1,
+  "steps": [
+    {
+      "id": "design",
+      "title": "Design the app and plan how it is built",
+      "agent": "ui-designer",
+      "gates": [
+        "design_blueprint_present"
+      ],
+      "needsAgent": false,
+      "stage": "build",
+      "message": "Complete DESIGN.md below the closing shipyard:design marker yourself, following the\ndesigning-the-interface skill: the scene, what this must not look like, the details and wording\nof each screen. Do not change the generated part, and write no screen code.\n\nThen plan the data and the screens on top of the installed parts and their seams (IDEA.md,\nPROJECT.md, DESIGN.md and ARCHITECTURE.md), without rebuilding anything a part already does.\nWrite the plan into .shipyard/progress.md as the \"Next\" list, one line per step. No code in this step.",
+      "status": "done",
+      "agentSeen": "never",
+      "results": {
+        "design_blueprint_present": {
+          "status": "passed",
+          "at": "2026-11-09T13:59:41.216Z",
+          "key": "97f7a3a6ee3948f439ae01fd418bc9168360018e1752294dfdb01b98b7be6879:design_blueprint_present:172e2957cf4f",
+          "ms": 1
+        }
+      },
+      "workFrom": "c91d43cf0bb7620ad43c26d085247d179a215f334d49e02dbd12893ceccace57",
+      "worked": true,
+      "doneAt": "2026-11-09T13:40:34.994Z"
+    },
+    {
+      "id": "phase-1",
+      "title": "The first real feature",
+      "agent": "builder",
+      "gates": [
+        "typecheck_passes",
+        "unit_tests_pass",
+        "style_check_passes",
+        "pages_load"
+      ],
+      "needsAgent": false,
+      "stage": "build",
+      "message": "Phase 1 of 3: The first real feature\n\nOne thing, finished properly: the screen first so you can see it, then everything behind it. It tells us the shape of the rest.\n\nWhen this phase is finished, the person who owns this project should be able\nto open the app and see something that was not there before. Please work\ntowards that rather than towards a complete data model.\n\nThis is a working prototype: the main journey has to really work, end to\nend, on the real database, with real sign-in where the idea has one.\nSample rows to start from are fine; faking what the journey depends on is not.\nPolish, rare cases and nice-to-haves can wait.\n\nThis project already has these ready-made parts installed. Use them rather\nthan writing your own, and do not edit inside their folders:\n\n- **Signing in** — `src/components/auth`\n- **The screens people sign in on** — `src/components/auth_screens`\n- **A list people can sort and search** — `src/components/data_table`\n- **Keeping customers separate** — `src/components/organization_tenancy`\n- **I forgot my password** — `src/components/password_reset`\n- **Database foundation** — `src/components/postgres_schema`\n- **Emailing your users** — `src/components/transactional_email`\n- **The screens every app starts with** — `src/components/ui_blocks`\n- **How the app looks** — `src/components/ui_foundation`\n\nIf one of them is genuinely wrong for what is being asked, say so rather than\nworking around it.\n\nLeave the app running at the end. If you cannot, say what is broken rather\nthan leaving it for the owner to discover.\n\nBuild the code and the screens yourself, each screen against DESIGN.md.",
+      "status": "done",
+      "agentSeen": "never",
+      "results": {
+        "typecheck_passes": {
+          "status": "passed",
+          "at": "2026-11-09T13:59:41.216Z",
+          "key": "97f7a3a6ee3948f439ae01fd418bc9168360018e1752294dfdb01b98b7be6879:typecheck_passes:7b87d722ef6a",
+          "ms": 3060
+        },
+        "unit_tests_pass": {
+          "status": "passed",
+          "at": "2026-11-09T13:59:41.216Z",
+          "key": "97f7a3a6ee3948f439ae01fd418bc9168360018e1752294dfdb01b98b7be6879:unit_tests_pass:3b93e2a20c8a",
+          "ms": 13223
+        },
+        "style_check_passes": {
+          "status": "passed",
+          "at": "2026-11-09T13:59:41.216Z",
+          "key": "97f7a3a6ee3948f439ae01fd418bc9168360018e1752294dfdb01b98b7be6879:style_check_passes:fadedb125b69",
+          "ms": 429
+        },
+        "pages_load": {
+          "status": "passed",
+          "at": "2026-11-09T13:59:41.216Z",
+          "key": "97f7a3a6ee3948f439ae01fd418bc9168360018e1752294dfdb01b98b7be6879:pages_load:e7b253438bac",
+          "ms": 9
+        }
+      },
+      "workFrom": "0e489fbf1574df2e53c2d4fc7ea12c1b138f0260f033c03d10723244eba980a9",
+      "worked": true,
+      "doneAt": "2026-11-09T13:40:34.994Z"
+    },
+    {
+      "id": "phase-2",
+      "title": "The rest of the features",
+      "agent": "builder",
+      "gates": [
+        "typecheck_passes",
+        "unit_tests_pass",
+        "style_check_passes",
+        "pages_load"
+      ],
+      "needsAgent": false,
+      "stage": "build",
+      "message": "Phase 2 of 3: The rest of the features\n\nEach one finished before the next one starts, so the app is never half-broken.\n\nWhen this phase is finished, the person who owns this project should be able\nto open the app and see something that was not there before. Please work\ntowards that rather than towards a complete data model.\n\nThis is a working prototype: the main journey has to really work, end to\nend, on the real database, with real sign-in where the idea has one.\nSample rows to start from are fine; faking what the journey depends on is not.\nPolish, rare cases and nice-to-haves can wait.\n\nThis project already has these ready-made parts installed. Use them rather\nthan writing your own, and do not edit inside their folders:\n\n- **Signing in** — `src/components/auth`\n- **The screens people sign in on** — `src/components/auth_screens`\n- **A list people can sort and search** — `src/components/data_table`\n- **Keeping customers separate** — `src/components/organization_tenancy`\n- **I forgot my password** — `src/components/password_reset`\n- **Database foundation** — `src/components/postgres_schema`\n- **Emailing your users** — `src/components/transactional_email`\n- **The screens every app starts with** — `src/components/ui_blocks`\n- **How the app looks** — `src/components/ui_foundation`\n\nIf one of them is genuinely wrong for what is being asked, say so rather than\nworking around it.\n\nLeave the app running at the end. If you cannot, say what is broken rather\nthan leaving it for the owner to discover.\n\nBuild the code and the screens yourself, each screen against DESIGN.md.",
+      "status": "done",
+      "agentSeen": "never",
+      "results": {
+        "typecheck_passes": {
+          "status": "passed",
+          "at": "2026-11-09T13:59:41.216Z",
+          "key": "97f7a3a6ee3948f439ae01fd418bc9168360018e1752294dfdb01b98b7be6879:typecheck_passes:7b87d722ef6a",
+          "ms": 3060
+        },
+        "unit_tests_pass": {
+          "status": "passed",
+          "at": "2026-11-09T13:59:41.216Z",
+          "key": "97f7a3a6ee3948f439ae01fd418bc9168360018e1752294dfdb01b98b7be6879:unit_tests_pass:3b93e2a20c8a",
+          "ms": 13223
+        },
+        "style_check_passes": {
+          "status": "passed",
+          "at": "2026-11-09T13:59:41.216Z",
+          "key": "97f7a3a6ee3948f439ae01fd418bc9168360018e1752294dfdb01b98b7be6879:style_check_passes:fadedb125b69",
+          "ms": 429
+        },
+        "pages_load": {
+          "status": "passed",
+          "at": "2026-11-09T13:59:41.216Z",
+          "key": "97f7a3a6ee3948f439ae01fd418bc9168360018e1752294dfdb01b98b7be6879:pages_load:e7b253438bac",
+          "ms": 9
+        }
+      },
+      "workFrom": "33923ce8329fb344aa28dd72d20eba251cfc400c292a30e9f5a5ebae39ce6401",
+      "worked": true,
+      "doneAt": "2026-11-09T13:40:34.994Z"
+    },
+    {
+      "id": "phase-3",
+      "title": "Show it to someone",
+      "agent": "builder",
+      "gates": [
+        "typecheck_passes",
+        "unit_tests_pass",
+        "style_check_passes",
+        "pages_load"
+      ],
+      "needsAgent": false,
+      "stage": "build",
+      "message": "Phase 3 of 3: Show it to someone\n\nA private link you can send. The information is real, and so is sign-in if your app has it, but nothing is backed up, so do not put anything in it you cannot lose.\n\nWhen this phase is finished, the person who owns this project should be able\nto open the app and see something that was not there before. Please work\ntowards that rather than towards a complete data model.\n\nThis is a working prototype: the main journey has to really work, end to\nend, on the real database, with real sign-in where the idea has one.\nSample rows to start from are fine; faking what the journey depends on is not.\nPolish, rare cases and nice-to-haves can wait.\n\nThis project already has these ready-made parts installed. Use them rather\nthan writing your own, and do not edit inside their folders:\n\n- **Signing in** — `src/components/auth`\n- **The screens people sign in on** — `src/components/auth_screens`\n- **A list people can sort and search** — `src/components/data_table`\n- **Keeping customers separate** — `src/components/organization_tenancy`\n- **I forgot my password** — `src/components/password_reset`\n- **Database foundation** — `src/components/postgres_schema`\n- **Emailing your users** — `src/components/transactional_email`\n- **The screens every app starts with** — `src/components/ui_blocks`\n- **How the app looks** — `src/components/ui_foundation`\n\nIf one of them is genuinely wrong for what is being asked, say so rather than\nworking around it.\n\nLeave the app running at the end. If you cannot, say what is broken rather\nthan leaving it for the owner to discover.\n\nBuild the code and the screens yourself, each screen against DESIGN.md.",
+      "status": "done",
+      "agentSeen": "never",
+      "results": {
+        "typecheck_passes": {
+          "status": "passed",
+          "at": "2026-11-09T13:59:41.216Z",
+          "key": "97f7a3a6ee3948f439ae01fd418bc9168360018e1752294dfdb01b98b7be6879:typecheck_passes:7b87d722ef6a",
+          "ms": 3060
+        },
+        "unit_tests_pass": {
+          "status": "passed",
+          "at": "2026-11-09T13:59:41.216Z",
+          "key": "97f7a3a6ee3948f439ae01fd418bc9168360018e1752294dfdb01b98b7be6879:unit_tests_pass:3b93e2a20c8a",
+          "ms": 13223
+        },
+        "style_check_passes": {
+          "status": "passed",
+          "at": "2026-11-09T13:59:41.216Z",
+          "key": "97f7a3a6ee3948f439ae01fd418bc9168360018e1752294dfdb01b98b7be6879:style_check_passes:fadedb125b69",
+          "ms": 429
+        },
+        "pages_load": {
+          "status": "passed",
+          "at": "2026-11-09T13:59:41.216Z",
+          "key": "97f7a3a6ee3948f439ae01fd418bc9168360018e1752294dfdb01b98b7be6879:pages_load:e7b253438bac",
+          "ms": 9
+        }
+      },
+      "workFrom": "421a3918d17f356c07dca11d706dc3e595f5b5240126fc532f0fb204b7985e62",
+      "worked": true,
+      "doneAt": "2026-11-09T13:40:34.994Z"
+    },
+    {
+      "id": "tests",
+      "title": "Write the browser checks for the core flows",
+      "agent": "test-engineer",
+      "gates": [
+        "core_flow_smoke_test",
+        "core_flow_specs_present"
+      ],
+      "needsAgent": false,
+      "stage": "launch",
+      "message": "Beside e2e/smoke.spec.ts, add or update one Playwright spec per core flow in IDEA.md and the\nscreens in DESIGN.md: what a person does, step by step, and what they should see. They run on\nShipyard's test copy of the app, which has its own database (.shipyard/check-server.json), never\non the founder's app; do not start a server. Each check creates the data it needs and never relies\non data another check left behind. While you work, run only the specs you write, one file at a\ntime: npx playwright test e2e/<file>.spec.ts. Shipyard runs the whole suite when this turn ends.\nA failing check is a finding: fix the app, do not weaken the check.",
+      "status": "done",
+      "agentSeen": "never",
+      "results": {
+        "core_flow_smoke_test": {
+          "status": "passed",
+          "at": "2026-11-09T13:59:41.216Z",
+          "key": "97f7a3a6ee3948f439ae01fd418bc9168360018e1752294dfdb01b98b7be6879:core_flow_smoke_test:7acca6f1bcaa",
+          "ms": 142480
+        },
+        "core_flow_specs_present": {
+          "status": "passed",
+          "at": "2026-11-09T13:59:41.216Z",
+          "key": "97f7a3a6ee3948f439ae01fd418bc9168360018e1752294dfdb01b98b7be6879:core_flow_specs_present:cdb8d278fd6b",
+          "ms": 5
+        }
+      },
+      "workFrom": "6ee985b76d1be266bf7712f7d4be457e4ef527d8cf0c3c34bf7452bf3f462236",
+      "worked": true,
+      "doneAt": "2026-11-09T13:59:41.216Z"
+    },
+    {
+      "id": "browser-check",
+      "title": "Walk the app in a browser",
+      "agent": "browser-qa",
+      "gates": [
+        "core_flow_smoke_test",
+        "core_flow_specs_present"
+      ],
+      "needsAgent": false,
+      "stage": "launch",
+      "message": "Run the browser checks one spec file at a time against the app Shipyard is running, read the\nscreenshots in test-results/, and note what is actually on screen, worst first. Then fix what is\nwrong yourself, one problem at a time; after each fix run only the spec that showed it, once.\nShipyard runs the whole suite when this turn ends.",
+      "status": "done",
+      "agentSeen": "never",
+      "results": {
+        "core_flow_smoke_test": {
+          "status": "passed",
+          "at": "2026-11-09T13:59:41.216Z",
+          "key": "97f7a3a6ee3948f439ae01fd418bc9168360018e1752294dfdb01b98b7be6879:core_flow_smoke_test:7acca6f1bcaa",
+          "ms": 142480
+        },
+        "core_flow_specs_present": {
+          "status": "passed",
+          "at": "2026-11-09T13:59:41.216Z",
+          "key": "97f7a3a6ee3948f439ae01fd418bc9168360018e1752294dfdb01b98b7be6879:core_flow_specs_present:cdb8d278fd6b",
+          "ms": 5
+        }
+      },
+      "workFrom": "f0c1eb5903640b9498b066194da2e2bcec8d7df8132d8165bb85ffbca2c65f3e",
+      "worked": true,
+      "doneAt": "2026-11-09T13:59:41.216Z"
+    },
+    {
+      "id": "security",
+      "title": "Security review",
+      "agent": "security-reviewer",
+      "gates": [
+        "build_passes"
+      ],
+      "needsAgent": false,
+      "stage": "launch",
+      "message": "Review what was built for security yourself: input validation, what each screen and route lets a\nperson see and change, secrets, and anything that reads the database. Fix what must change, then\nreport the findings in plain words, worst first.",
+      "status": "done",
+      "agentSeen": "never",
+      "results": {
+        "build_passes": {
+          "status": "passed",
+          "at": "2026-11-09T13:59:41.216Z",
+          "key": "97f7a3a6ee3948f439ae01fd418bc9168360018e1752294dfdb01b98b7be6879:build_passes:ac813356991e",
+          "ms": 30227
+        }
+      },
+      "workFrom": "80743d2694b0a8bdbba02a492f29e7308efbc48586bedf8bb104f01f571768e6",
+      "worked": true,
+      "doneAt": "2026-11-09T13:59:41.216Z"
+    }
+  ],
+  "helpers": [],
+  "claimsStamp": "97f7a3a6ee3948f439ae01fd418bc9168360018e1752294dfdb01b98b7be6879"
+}

@@ -1,0 +1,335 @@
+{
+  "app": "team-invoices",
+  "scoredAt": "2026-11-09T14:06:16.620Z",
+  "model": "claude-opus-5-5",
+  "static": {
+    "linesWritten": 9661,
+    "partLines": 4384,
+    "secrets": [],
+    "testFixtureSecrets": [
+      "e2e\\studio.ts",
+      "tests\\contracts\\auth.test.ts",
+      "tests\\team\\colleagues.test.ts"
+    ],
+    "envFiles": [],
+    "fileSizes": {
+      "files": 93,
+      "over500": [],
+      "largest": {
+        "file": "src\\app\\reset-password\\page.tsx",
+        "lines": 244
+      }
+    },
+    "envRead": [
+      "APP_URL",
+      "DATABASE_URL",
+      "JOBS_TICK_SECRET",
+      "NODE_ENV",
+      "PATH",
+      "PORT",
+      "SHIPYARD_DIST_DIR",
+      "SHIPYARD_RUNTIME",
+      "SHIPYARD_SCHEMA_AT_DEPLOY"
+    ],
+    "hardcodedLocalhost": []
+  },
+  "operator": {
+    "recipe": {
+      "install": "npm ci",
+      "prepareDatabase": "npx prisma db push --skip-generate",
+      "typecheck": "npm run typecheck",
+      "build": "npm run build",
+      "test": "npm test",
+      "start": "node scripts/start.mjs",
+      "env": {
+        "DATABASE_URL": "postgresql://shipyard:O4uv8188eZJXs_FA9QPiBkEmrfoQd-f1@127.0.0.1:62438/postgres",
+        "PORT": "52747",
+        "APP_URL": "http://localhost:52747",
+        "EMAIL_PROVIDER": "console",
+        "EMAIL_FROM": "noreply@example.com",
+        "AUTH_LOCKOUT_MAX_ATTEMPTS": "5",
+        "NEXT_TELEMETRY_DISABLED": "1"
+      },
+      "notes": "This app has no migrations folder, so the database is set up with 'prisma db push'. I ran that against the empty database and it worked. The start command (node scripts/start.mjs) runs the same schema push again and then runs 'next start -p $PORT'. Run 'npm run build' first: it does 'prisma generate' and then 'next build'. I did not run the build, typecheck or tests, so the folder stays unchanged; only the database push was tried. No seed is needed and there are no starting accounts. To make the first account, go to /register and enter an email and password, then sign in. You are taken to /welcome, where you name the studio and give your name. After that: add clients, then invoices with line items. Invoices are in GBP, default to 20% tax and are numbered INV-0001, INV-0002 and so on for each studio. Status only moves forward: draft, then sent, then paid. Only a draft can be edited. 'Still owed' adds up the sent invoices. Any studio member can add a colleague on the Team page (name, email and a starting password); the colleague then signs in with that password. An email that already has an account is refused. Emails such as password reset are printed to the server console, not sent. The session cookie is marked Secure in production, so open the app at http://localhost:52747, not at a LAN IP over plain http. The unit tests need no database."
+    },
+    "changedFiles": []
+  },
+  "deploy": {
+    "productionStart": true,
+    "envDocumented": true,
+    "undocumentedEnv": [],
+    "noHardcodedLocalhost": true,
+    "hardcodedLocalhost": [],
+    "migrations": false
+  },
+  "install": {
+    "command": "npm ci",
+    "ok": true,
+    "seconds": 65
+  },
+  "prepareDatabase": {
+    "command": "npx prisma db push --skip-generate",
+    "ok": true,
+    "seconds": 3
+  },
+  "build": {
+    "command": "npm run build",
+    "ok": true,
+    "seconds": 24
+  },
+  "typecheck": {
+    "command": "npm run typecheck",
+    "ok": true,
+    "seconds": 3
+  },
+  "testDatabase": {
+    "command": "npx prisma db push --skip-generate",
+    "ok": true,
+    "seconds": 2
+  },
+  "tests": {
+    "command": "npm test",
+    "ok": true,
+    "seconds": 15,
+    "passed": 346,
+    "failed": 0,
+    "skipped": 6
+  },
+  "audit": {
+    "status": "PASS",
+    "high": 0,
+    "critical": 0
+  },
+  "starts": true,
+  "judge": {
+    "checks": [
+      {
+        "id": "A1",
+        "status": "PASS",
+        "note": "Registered maya@north.example, signed in, named the studio North Studio with owner Maya on /welcome, and landed on an empty North Studio invoices page."
+      },
+      {
+        "id": "A2",
+        "status": "PASS",
+        "note": "Maya added Leo (leo@north.example) on the Team page, and Leo signed in with the starting password and saw North Studio and its team."
+      },
+      {
+        "id": "A3",
+        "status": "FAIL",
+        "note": "Acme Ltd was saved and appears in the invoice client picker, but after Save client the list kept showing 'No clients yet' (and on later tries left out the new client) until the page was reloaded, which happened every time on desktop."
+      },
+      {
+        "id": "A4",
+        "status": "PASS",
+        "note": "3×250.00 plus 2×80.00 at 20% showed subtotal £910.00, tax £182.00 and total £1,092.00, and changing Revisions to 4 updated the totals live and after saving to £1,070.00, £214.00 and £1,284.00."
+      },
+      {
+        "id": "A5",
+        "status": "PASS",
+        "note": "The second invoice became INV-0002, the app has no delete or cancel, and the third invoice became INV-0003 with no number reused."
+      },
+      {
+        "id": "A6",
+        "status": "PASS",
+        "note": "INV-0001 moved from draft to sent to paid, still owed went from £1,284.00 to £0.00, and the list puts unpaid invoices above paid ones."
+      },
+      {
+        "id": "A7",
+        "status": "PASS",
+        "note": "After Maya signed out, Leo signed in and saw Acme Ltd and INV-0001 to INV-0003 with the same statuses and totals."
+      },
+      {
+        "id": "S1",
+        "status": "PASS",
+        "note": "Sam's South Studio started with no clients or invoices, and its first invoice was numbered INV-0001."
+      },
+      {
+        "id": "S2",
+        "status": "PASS",
+        "note": "As Sam, North Studio invoice and client addresses showed the 'This page is not here' page, and API attempts to edit, change status or delete North records returned 404 or 405 without changing anything."
+      },
+      {
+        "id": "S3",
+        "status": "PASS",
+        "note": "Creating or re-pointing a South invoice to North's Acme client id, through a tampered form option or a direct request, was refused with 400 'Choose one of your clients.'"
+      },
+      {
+        "id": "S4",
+        "status": "PASS",
+        "note": "After signing out, typed addresses for invoices, clients, team, new invoice and invoice detail all went to /sign-in, including with the old session cookie."
+      },
+      {
+        "id": "C1",
+        "status": "PASS",
+        "note": "3 × 0.10 showed £0.30, with tax £0.06 and total £0.36, on the form, the invoice and the list."
+      },
+      {
+        "id": "C2",
+        "status": "PASS",
+        "note": "A negative quantity was refused with 'Enter a quantity such as 1, 2.5 or 0.25.' and a missing description with 'Please enter a description.', and no invoice was created."
+      },
+      {
+        "id": "C3",
+        "status": "PASS",
+        "note": "No step showed a framework error page, stack trace or blank white screen; unknown addresses showed a friendly not-found page."
+      },
+      {
+        "id": "M1",
+        "status": "FAIL",
+        "note": "The page width stays at 390, but at that width the invoices table cuts off the Created column ('CREA', '9 No') and hides Status and Total for long client names, and the clients table hides the Invoices and Edit columns past the right edge with no sign that the table scrolls sideways."
+      },
+      {
+        "id": "M2",
+        "status": "PASS",
+        "note": "At 390×844, sign-up, sign-in, studio setup, adding a colleague and adding a client (all with -phone names) worked by tapping, with every needed control on screen."
+      },
+      {
+        "id": "D1",
+        "status": "PASS",
+        "note": "The Beta GmbH £400.00 invoice raised still owed from £0.00 to £400.00 when sent and back to £0.00 when paid, and it then moved below the unpaid invoices."
+      },
+      {
+        "id": "D2",
+        "status": "PASS",
+        "note": "Maya and Leo saving at the same moment in separate contexts got INV-0006 and INV-0007, both new numbers after every earlier one."
+      },
+      {
+        "id": "D3",
+        "status": "PASS",
+        "note": "99.99 at 12.5% showed £99.99, £12.50 and £112.49 on the invoice and the list, and changing the rate to 0% gave £0.00 tax and £99.99 total after saving."
+      },
+      {
+        "id": "D4",
+        "status": "PASS",
+        "note": "Leo's invoice for Acme Ltd got INV-0009 in the studio sequence, and Maya saw it and marked it sent."
+      },
+      {
+        "id": "D5",
+        "status": "PASS",
+        "note": "Removing the second line of a two-line draft recalculated it from £255.55 / £51.11 / £306.66 to £200.00 / £40.00 / £240.00, and that held after saving and reloading."
+      },
+      {
+        "id": "D6",
+        "status": "PASS",
+        "note": "1,000 × 12,345.67 at 20% showed £12,345,670.00, £2,469,134.00 and £14,814,804.00 exactly and uncut, on the invoice and the list."
+      },
+      {
+        "id": "D7",
+        "status": "FAIL",
+        "note": "The accented name and address show exactly on the desktop client list, but the invoice never shows the client's address, and at 390px the name is cut off at the right edge of the client and invoice lists."
+      },
+      {
+        "id": "D8",
+        "status": "PASS",
+        "note": "The HTML-looking name showed as literal text on the client list, invoice, picker and invoice list, with nothing bold, no image element and no dialog."
+      },
+      {
+        "id": "D9",
+        "status": "PASS",
+        "note": "An empty client name was refused with 'Please enter the client's name.' and adding leo@north.example again (any letter case) with 'That email address already has an account...', and no extra client or person appeared."
+      },
+      {
+        "id": "D10",
+        "status": "PASS",
+        "note": "Quantity 'abc', quantity 0 and price 12.345 (also Infinity and 1e400) were each refused with a plain message, and no NaN, Infinity or blank total appeared anywhere."
+      },
+      {
+        "id": "D11",
+        "status": "FAIL",
+        "note": "Double-pressing Create invoice sent two POSTs and created two invoices (INV-0015/0016, and again INV-0017/0018 with a real mouse double-click), and Save draft also sent twice."
+      },
+      {
+        "id": "D12",
+        "status": "PASS",
+        "note": "After reloads and fresh sign-ins as Maya and as Leo, all 21 pages checked (lists, team and every invoice) were identical to before."
+      },
+      {
+        "id": "D13",
+        "status": "PASS",
+        "note": "Signed out, page and RSC requests redirected to /sign-in, write APIs returned 401 'Please sign in.', list APIs returned 405, and no names, addresses or amounts came back."
+      },
+      {
+        "id": "D14",
+        "status": "PASS",
+        "note": "As Sam, replaying Maya's create-invoice, status-change and add-colleague requests returned 400, 404, 404 and 409, and North Studio's team and invoices were unchanged."
+      },
+      {
+        "id": "D15",
+        "status": "FAIL",
+        "note": "From the 5th wrong password, sign-in returns 429, but the screen says 'Wait a minute' while the lock actually lasts about 15 minutes (still locked after 75 s and at about 15 min); Leo's right password worked again after roughly 17 minutes."
+      },
+      {
+        "id": "D16",
+        "status": "PASS",
+        "note": "The 'sid' session cookie is HttpOnly, Secure and SameSite=Lax, and document.cookie is empty."
+      },
+      {
+        "id": "D17",
+        "status": "PASS",
+        "note": "Using only Tab, Enter and typing, Maya signed in and created INV-0019 for Acme Ltd, with a visible 2px focus ring on every focused element."
+      },
+      {
+        "id": "D18",
+        "status": "PASS",
+        "note": "Every field on the sign-in, add-client and invoice forms (client, each line's description, quantity and unit price, and the tax rate) is found by getByLabel, and none relies on placeholders."
+      }
+    ]
+  },
+  "stuck": {
+    "problems": [
+      {
+        "id": "A3",
+        "told": false
+      },
+      {
+        "id": "M1",
+        "told": false
+      },
+      {
+        "id": "D7",
+        "told": false
+      },
+      {
+        "id": "D11",
+        "told": false
+      },
+      {
+        "id": "D15",
+        "told": false
+      }
+    ],
+    "plainLanguage": 2,
+    "nextStep": true,
+    "claimedAllWorking": false
+  },
+  "total": {
+    "works": 30,
+    "separation": 25,
+    "care": 10,
+    "builds": 10,
+    "security": 10,
+    "tests": 10,
+    "outOf100": 95
+  },
+  "founder": {
+    "deployReady": 24,
+    "fileSize": 15,
+    "phone": 12.5,
+    "stuck": 12,
+    "payments": null,
+    "outOf100": 63.5
+  },
+  "depth": {
+    "brief": 100,
+    "inputs": 66.7,
+    "attacks": 75,
+    "access": 100,
+    "passed": 15,
+    "of": 18,
+    "outOf100": 83.3
+  },
+  "integrity": {
+    "sourceFiles": 197,
+    "changedByScoring": []
+  }
+}

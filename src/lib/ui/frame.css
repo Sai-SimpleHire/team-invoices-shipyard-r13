@@ -1,0 +1,200 @@
+/*
+ * The studio's pages. Every colour, corner and step is a theme variable (DESIGN.md, Tokens).
+ *
+ * The AppShell from ui_blocks is a sidebar; DESIGN.md asks for a top bar for three sections,
+ * so it is restyled here (more specific selectors, the component's own file untouched).
+ */
+
+body .blk-shell {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+}
+
+body .blk-shell-nav {
+  border-right: 0;
+  border-bottom: 1px solid var(--line);
+  padding: calc(var(--space) * 2) calc(var(--space) * 4);
+}
+
+body .blk-shell-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--space) * 2);
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+body .blk-nav-link {
+  border-left: 0;
+  border-bottom: 3px solid transparent;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+body .blk-nav-link.is-current {
+  border-bottom-color: var(--accent);
+}
+
+body .blk-shell-main {
+  padding: calc(var(--space) * 6) calc(var(--space) * 4);
+}
+
+.studio-bar,
+.studio-page {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.studio-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--space) * 3);
+  margin-bottom: calc(var(--space) * 6);
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.studio-name {
+  font-weight: 600;
+  color: var(--fg);
+  overflow-wrap: anywhere;
+}
+
+.studio-person {
+  margin-right: auto;
+  overflow-wrap: anywhere;
+}
+
+/* ------------------------------------------------------------- page parts */
+
+.page-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--space) * 3);
+  margin-bottom: calc(var(--space) * 4);
+}
+
+.page-head h1 {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--space) * 3);
+}
+
+/* A link that looks like a button (New invoice) is not underlined like a link. */
+a.ui-button {
+  text-decoration: none;
+}
+
+.page-lede {
+  color: var(--muted);
+  max-width: 40rem;
+}
+
+.amount {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.owed {
+  margin-bottom: calc(var(--space) * 8);
+}
+
+.owed-total {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.owed-detail {
+  color: var(--muted);
+  margin: 0;
+}
+
+.data-table {
+  overflow-x: auto;
+}
+
+/* A column that cannot be sorted (Actions) looks like the sortable headings beside it. */
+.data-table-grid th:not([aria-sort]) {
+  padding: calc(var(--space) * 2);
+  font-size: 0.75em;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Hidden screen-reader words in a row (e.g. "Edit <client>") are absolutely positioned. Without a
+ * positioned ancestor they are placed against the page and push it sideways on a phone. */
+.data-table,
+.data-table-grid {
+  position: relative;
+}
+
+.empty-state {
+  padding: calc(var(--space) * 8) calc(var(--space) * 4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.empty-state p:last-child {
+  margin-bottom: 0;
+}
+
+.notice-error {
+  padding: calc(var(--space) * 3);
+  border: 1px solid var(--danger-fg);
+  border-radius: var(--radius);
+  background: var(--danger);
+  color: var(--danger-fg);
+}
+
+/* ----------------------------------------------------------------- forms */
+
+.stack-form {
+  display: grid;
+  gap: calc(var(--space) * 4);
+}
+
+.form-field {
+  display: grid;
+  gap: calc(var(--space) * 1);
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 100%;
+}
+
+.form-field label {
+  margin-bottom: 0;
+}
+
+.field-hint {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.field-error {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--danger-fg);
+}
+
+[aria-invalid='true'] {
+  border-color: var(--danger-fg);
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--space) * 3);
+  align-items: center;
+}

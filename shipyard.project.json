@@ -1,0 +1,25 @@
+{
+  "contractVersion": 1,
+  "generatedAt": "2026-11-09T13:23:47.940Z",
+  "projectId": "eval",
+  "name": "project",
+  "idea": "Small design and marketing studios send invoices from Word templates. Numbers get reused, totals are added up by hand, and nobody can see which invoices are still unpaid without opening every file.\n\nOnly invoicing, for a whole studio at once: clients, invoices with line items and correct totals, and one list of what is unpaid. Every studio's information is completely separate from every other studio's.",
+  "targetMode": "functional_prototype",
+  "intent": {
+    "targetMode": "functional_prototype",
+    "regions": [],
+    "sensitiveData": false,
+    "payments": true,
+    "aiAffectsConsequentialDecision": false,
+    "humanReviewRequired": false,
+    "publicFacing": false,
+    "existingCodeSource": "new_project"
+  },
+  "stack": {
+    "framework": "Next.js",
+    "language": "TypeScript",
+    "database": "PostgreSQL",
+    "orm": "Prisma",
+    "tests": "Vitest"
+  }
+}

@@ -1,0 +1,133 @@
+/* The invoice, laid out like a printed one (DESIGN.md, Invoice). Theme variables only. */
+
+.invoice-sheet {
+  max-width: 52rem;
+}
+
+.invoice-client {
+  max-width: 24rem;
+}
+
+.invoice-lines {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: calc(var(--space) * 4);
+  margin: 0;
+  display: grid;
+  gap: calc(var(--space) * 3);
+  min-width: 0;
+}
+
+.invoice-lines legend {
+  font-weight: 600;
+  padding: 0 calc(var(--space) * 2);
+}
+
+.invoice-line {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 6rem 8rem 8rem auto;
+  gap: calc(var(--space) * 3);
+  /* Top, not bottom: an error under one field must not push the other boxes out of line. */
+  align-items: start;
+  padding-bottom: calc(var(--space) * 3);
+  border-bottom: 1px solid var(--line);
+}
+
+.invoice-line-amount {
+  display: grid;
+  gap: calc(var(--space) * 1);
+  text-align: right;
+}
+
+.invoice-line-amount .amount {
+  padding-top: calc(var(--space) * 2);
+}
+
+.invoice-line > .ui-button {
+  margin-top: calc(var(--space) * 7);
+}
+
+.invoice-line-quantity input,
+.invoice-line-unitPrice input {
+  text-align: right;
+}
+
+@media (max-width: 48rem) {
+  .invoice-line {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .invoice-line-description {
+    grid-column: 1 / -1;
+  }
+
+  .invoice-line-amount {
+    text-align: left;
+  }
+}
+
+.invoice-totals {
+  display: grid;
+  justify-items: end;
+  gap: calc(var(--space) * 3);
+}
+
+.invoice-tax-rate {
+  width: 8rem;
+}
+
+.invoice-tax-rate input {
+  text-align: right;
+}
+
+.invoice-totals dl {
+  display: grid;
+  grid-template-columns: auto 9rem;
+  gap: calc(var(--space) * 2) calc(var(--space) * 6);
+  margin: 0;
+}
+
+.invoice-totals dt {
+  color: var(--muted);
+}
+
+.invoice-totals dd {
+  margin: 0;
+  text-align: right;
+}
+
+.invoice-totals .invoice-grand {
+  color: var(--fg);
+  font-weight: 700;
+  font-size: 1.125rem;
+  border-top: 1px solid var(--line);
+  padding-top: calc(var(--space) * 2);
+}
+
+.invoice-read-lines {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: calc(var(--space) * 6);
+}
+
+.invoice-read-lines th,
+.invoice-read-lines td {
+  padding: calc(var(--space) * 2);
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.invoice-read-lines th {
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.invoice-read-lines .amount,
+.invoice-read-lines th:not(:first-child) {
+  text-align: right;
+}
+
+.invoice-status-actions .field-hint {
+  max-width: 18rem;
+}

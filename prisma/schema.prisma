@@ -1,0 +1,221 @@
+// The database, as the code understands it.
+//
+// This file starts almost empty on purpose. Components add their own models to
+// it when they install — the installer appends fragments and refuses when a
+// model name is already taken, so two components cannot quietly disagree about
+// what a `User` is.
+//
+// Anything you add by hand goes at the bottom, under the marker. The installer
+// never writes above it.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// >>> shipyard:components — installed components add their models below this line
+
+// --- postgres_schema ---
+/// Small pieces of configuration the app needs to remember between restarts.
+/// Deliberately not a place for secrets — those live in the environment.
+model AppSetting {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
+
+  @@map("app_settings")
+}
+
+// --- auth ---
+model User {
+  id                  String    @id @default(cuid())
+  email               String    @unique
+  name                String?
+  /// bcrypt hash. The plain password is never stored, logged or emailed.
+  passwordHash        String
+  emailVerifiedAt     DateTime?
+  /// Set when an account is suspended. Existing sessions stop working at once.
+  disabledAt          DateTime?
+  /// No longer read: failed sign-ins are counted per address in LoginAttempt
+  /// (auth 1.2.0). Kept so projects and parts that still set them keep working.
+  failedLoginAttempts Int       @default(0)
+  lockedUntil         DateTime?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  sessions Session[]
+
+  @@index([email])
+  @@map("users")
+}
+
+model Session {
+  id String @id @default(cuid())
+  /// SHA-256 of the cookie value. The value itself is never stored, so a
+  /// leaked backup does not contain usable sessions.
+  tokenHash String    @unique
+  userId    String
+  expiresAt DateTime
+  revokedAt DateTime?
+  userAgent String?
+  ip        String?
+  createdAt DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("sessions")
+}
+
+/// Failed sign-ins per email address, whether or not an account has it, so a
+/// lock never tells an unknown address from a real one.
+model LoginAttempt {
+  /// SHA-256 of the normalised address. The address itself is not stored.
+  key         String    @id
+  failures    Int       @default(0)
+  lockedUntil DateTime?
+  updatedAt   DateTime  @updatedAt
+
+  @@map("login_attempts")
+}
+
+// --- password_reset ---
+/// A password reset in progress.
+///
+/// `userId` is a plain indexed string rather than a Prisma relation, because
+/// `User` belongs to the `auth` component and a relation would need a field on
+/// its side too. See ARCHITECTURE.md, "Never relate across components".
+model PasswordResetToken {
+  id String @id @default(cuid())
+  /// SHA-256 of the value in the emailed link. The value itself is never
+  /// stored, so a leaked backup contains no usable reset links.
+  tokenHash String    @unique
+  userId    String
+  expiresAt DateTime
+  /// Set the moment it is spent. A reset link works exactly once.
+  usedAt    DateTime?
+  /// Who asked. Kept for abuse investigation, not for analytics.
+  requestedIp String?
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("password_reset_tokens")
+}
+
+// --- organization_tenancy ---
+enum MemberRole {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+model Organization {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  memberships Membership[]
+
+  @@map("organizations")
+}
+
+model Membership {
+  id             String     @id @default(cuid())
+  organizationId String
+  userId         String
+  role           MemberRole @default(MEMBER)
+  createdAt      DateTime   @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  /// One row per person per organisation. The unique constraint is what makes
+  /// "add them again" an update rather than a duplicate membership with a
+  /// different role.
+  @@unique([organizationId, userId])
+  @@index([userId])
+  @@map("memberships")
+}
+// <<< shipyard:components
+
+// Your own models go here.
+
+// --- Team invoices: the studio's own records ---
+// `organizationId` is the studio. Organization belongs to organization_tenancy, so it is a plain
+// indexed id, never a relation (ARCHITECTURE.md, "Never relate across components").
+
+model Client {
+  id             String    @id @default(cuid())
+  organizationId String
+  name           String
+  email          String
+  address        String    @default("")
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  invoices       Invoice[]
+
+  @@index([organizationId])
+  @@map("clients")
+}
+
+enum InvoiceStatus {
+  DRAFT
+  SENT
+  PAID
+}
+
+model Invoice {
+  id                 String        @id @default(cuid())
+  organizationId     String
+  /// The studio's own sequence: 1, 2, 3… Never reused, so invoices are never deleted.
+  number             Int
+  clientId           String
+  client             Client        @relation(fields: [clientId], references: [id])
+  status             InvoiceStatus @default(DRAFT)
+  /// 2000 means 20%. Whole basis points so no tax rate passes through a float.
+  taxRateBasisPoints Int           @default(0)
+  /// Whole pence, worked out on the server whenever the lines change.
+  subtotalMinor      Int           @default(0)
+  taxMinor           Int           @default(0)
+  totalMinor         Int           @default(0)
+  createdById        String
+  sentAt             DateTime?
+  paidAt             DateTime?
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+  lines              InvoiceLine[]
+
+  @@unique([organizationId, number])
+  @@index([organizationId, status])
+  @@index([clientId])
+  @@map("invoices")
+}
+
+model InvoiceLine {
+  id                 String  @id @default(cuid())
+  invoiceId          String
+  invoice            Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  position           Int
+  description        String
+  /// 150 means 1.5: quantities such as hours may have up to two decimal places.
+  quantityHundredths Int
+  unitPriceMinor     Int
+  amountMinor        Int
+
+  @@index([invoiceId])
+  @@map("invoice_lines")
+}
+
+/// The last invoice number each studio has used.
+model InvoiceCounter {
+  organizationId String @id
+  lastNumber     Int    @default(0)
+
+  @@map("invoice_counters")
+}

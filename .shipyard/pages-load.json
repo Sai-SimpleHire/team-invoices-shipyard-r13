@@ -1,0 +1,14 @@
+{
+  "pages": {
+    "/": "300f95e105096a14053b45516f5198c791551e4e557211bfebd5c398faef90a4",
+    "/clients": "97b2d38a2a93df4b31ec8c24fbcc8320e0a4136f5b09c4b23bb9fd4ab18eaf7b",
+    "/forgot-password": "31ed4df43e5d6263f18b0426a266d2f9bb99f2d5947e591f228cfc00a3a7ae55",
+    "/invoices": "a306a4f0059cab5328f79f50226bb82c8795077a8e44fac61483f5b4f9e52178",
+    "/invoices/new": "ab40606f0a4669eb594b2cd03ba52b461da4bedba631b0acb6bf18e2f3061563",
+    "/register": "d010baf85e050388bb7443496bad71f4b57b3496fde2c8947e81adeb3fc76cbf",
+    "/reset-password": "d9a43e06b3913282bd25075384adbca501e6b7191c5f672aacba593cb83f435d",
+    "/sign-in": "8e3ac5f52fc561fa3e81730634eedef3140bc6c3bd49cb899d8a82df933988f1",
+    "/team": "c600095418ec35ba79005f8fe47ce73d0cb729455f69ddc4aa38d6e8cac65112",
+    "/welcome": "9a697c60700c151acb2b58c08f102a9362058a781e28a56f9740f0ed6ec5ea5d"
+  }
+}
